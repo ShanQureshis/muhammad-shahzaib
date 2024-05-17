@@ -1,0 +1,921 @@
+{%- assign product1 = all_products[section.settings.custom_product_1] -%}
+{%- assign product2 = all_products[section.settings.custom_product_2] -%}
+{%- assign product3 = all_products[section.settings.custom_product_3] -%}
+{%- assign product4 = all_products[section.settings.custom_product_4] -%}
+{%- assign product5 = all_products[section.settings.custom_product_5] -%}
+{%- assign product6 = all_products[section.settings.custom_product_6] -%}
+<div class="product-grid">
+  <h2>{{ section.settings.heading }}</h2>
+  <div class="grid-container">
+    {% for i in (1..6) %}
+      {% capture product_link_id %}product_link_{{ i }}{% endcapture %}
+      {% capture image_id %}image_{{ i }}{% endcapture %}
+      {% capture custom_product_id %}custom_product_{{ i }}{% endcapture %}
+      <div class="grid-item">
+        <div class="product-item{{ i }}">
+          <img
+            class="custom_img"
+            src="{{ section.settings[image_id] | img_url: 'master' }}"
+            alt="Product {{ i }}"
+          >
+          {% if section.settings[custom_product_id] != blank %}
+            <button class="popup-trigger" href="#" onclick="openPopup{{ i }}()">+</button>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% if section.settings.custom_product_1 != blank %}
+  <div class="popup-container" id="popup1">
+    <div class="popup-content">
+      <span class="popup-close" onclick="closePopup1()">&times;</span>
+      <!-- Product Image -->
+      <div class="cont">
+        <div class="cont_item1">
+          <img src="{{ product1.featured_image | img_url: '100%' }}" alt="Product Image">
+        </div>
+        <!-- Product Details -->
+        <div class="cont_item2">
+          <h2>{{ product1.title }}</h2>
+          <p class="custom_price">{{ product1.price }} €</p>
+          <div class="custom_des">{{ product1.description }}</div>
+        </div>
+      </div>
+      <!-- Color Variant -->
+      <div class="color_item">
+        <div class="color_label">
+          <label for="color">Color:</label>
+        </div>
+        <div class="btn-group color_choice">
+          <button class="button clr_white">White</button>
+          <button class="button clr_black">Black</button>
+        </div>
+      </div>
+      <!-- Size Dropdown -->
+      <div class="size_item">
+        <div class="size_label">
+          <label for="size">Size:</label>
+        </div>
+        <div class="size_choice">
+          <select id="size">
+            <option value="" disabled selected hidden>Choose your size</option>
+            <option value="XS" style="text-align:center;">XS</option>
+            <option value="S" style="text-align:center;">S</option>
+            <option value="M" style="text-align:center;">M</option>
+            <option value="L" style="text-align:center;">L</option>
+            <option value="XL" style="text-align:center;">XL</option>
+          </select>
+        </div>
+      </div>
+      <!-- Variant selector -->
+
+      <form method="post" action="/cart/add">
+        {% if product1.variants.size > 1 %}
+          {% comment %}
+            {% for option in product1.options %}
+            <label for="SingleOptionSelector-{{forloop.index0}}"> {{ option }} </label>
+            <select id="SingleOptionSelector-{{forloop.index0}}"
+                class="single-option-selector single-option-selector-product-template product-form__input"
+                data-index="option{{forloop.index}}" name="id">
+                {% capture option_index %}option{{ forloop.index }}{% endcapture %}
+                {% assign option_values = product1.variants | map: option_index | uniq %}
+                {% for choice in option_values %}
+                <option value="{{ choice }}">
+                    {{ choice }}
+                </option>
+                {% endfor %}
+            </select>
+            {% endfor %}
+          {% endcomment %}
+          <select
+            id="ProductSelect-product-template"
+            class="product-form__variants no-js"
+            name="id"
+            data-productid="{{product1.id}}"
+            style="display: none;"
+          >
+            {% for option in product1.variants %}
+              <option value="{{option.id}}">
+                {{ option.title }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        {% comment %}
+          <input min="1" type="number" id="quantity" name="quantity" value="1">
+        {% endcomment %}
+
+        <!-- Add to Cart Button -->
+        <div class="custom_cart_btn">
+          <button type="submit" class="btn product-form__submit button button--full-width">
+            ADD TO CART<span class="arrow">&#8594;</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endif %}
+{% if section.settings.custom_product_2 != blank %}
+  <div class="popup-container" id="popup2">
+    <div class="popup-content">
+      <span class="popup-close" onclick="closePopup2()">&times;</span>
+      <!-- Product Image -->
+      <div class="cont">
+        <div class="cont_item1">
+          <img src="{{ product2.featured_image | img_url: '100%' }}" alt="Product Image">
+        </div>
+        <!-- Product Details -->
+        <div class="cont_item2">
+          <h2>{{ product2.title }}</h2>
+          <p class="custom_price">{{ product2.price }} €</p>
+          <div class="custom_des">{{ product2.description }}</div>
+        </div>
+      </div>
+      <!-- Color Variant -->
+      <div class="color_item">
+        <div class="color_label">
+          <label for="color">Color:</label>
+        </div>
+        <div class="btn-group color_choice">
+          <button class="button clr_blue">Blue</button>
+          <button class="button clr_black">Black</button>
+        </div>
+      </div>
+      <!-- Size Dropdown -->
+      <div class="size_item">
+        <div class="size_label">
+          <label for="size">Size:</label>
+        </div>
+        <div class="size_choice">
+          <select id="size">
+            <option value="" disabled selected hidden>Choose your size</option>
+            <option value="XS" style="text-align:center;">XS</option>
+            <option value="S" style="text-align:center;">S</option>
+            <option value="M" style="text-align:center;">M</option>
+            <option value="L" style="text-align:center;">L</option>
+            <option value="XL" style="text-align:center;">XL</option>
+          </select>
+        </div>
+      </div>
+      <!-- Variant selector -->
+
+      <form method="post" action="/cart/add">
+        {% if product1.variants.size > 1 %}
+          {% comment %}
+            {% for option in product1.options %}
+            <label for="SingleOptionSelector-{{forloop.index0}}"> {{ option }} </label>
+            <select id="SingleOptionSelector-{{forloop.index0}}"
+                class="single-option-selector single-option-selector-product-template product-form__input"
+                data-index="option{{forloop.index}}" name="id">
+                {% capture option_index %}option{{ forloop.index }}{% endcapture %}
+                {% assign option_values = product1.variants | map: option_index | uniq %}
+                {% for choice in option_values %}
+                <option value="{{ choice }}">
+                    {{ choice }}
+                </option>
+                {% endfor %}
+            </select>
+            {% endfor %}
+          {% endcomment %}
+          <select
+            id="ProductSelect-product-template"
+            class="product-form__variants no-js"
+            name="id"
+            data-productid="{{product2.id}}"
+            style="display: none;"
+          >
+            {% for option in product2.variants %}
+              <option value="{{option.id}}">
+                {{ option.title }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        {% comment %}
+          <input min="1" type="number" id="quantity" name="quantity" value="1">
+        {% endcomment %}
+
+        <!-- Add to Cart Button -->
+        <div class="custom_cart_btn">
+          <button type="submit" class="btn product-form__submit button button--full-width">
+            ADD TO CART<span class="arrow">&#8594;</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endif %}
+{% if section.settings.custom_product_3 != blank %}
+  <div class="popup-container" id="popup3">
+    <div class="popup-content">
+      <span class="popup-close" onclick="closePopup3()">&times;</span>
+      <!-- Product Image -->
+      <div class="cont">
+        <div class="cont_item1">
+          <img src="{{ product3.featured_image | img_url: '100%' }}" alt="Product Image">
+        </div>
+        <!-- Product Details -->
+        <div class="cont_item2">
+          <h2>{{ product3.title }}</h2>
+          <p class="custom_price">{{ product3.price }} €</p>
+          <div class="custom_des">{{ product3.description }}</div>
+        </div>
+      </div>
+      <!-- Color Variant -->
+      <div class="color_item">
+        <div class="color_label">
+          <label for="color">Color:</label>
+        </div>
+        <div class="btn-group color_choice">
+          <button class="button clr_red">Red</button>
+          <button class="button clr_grey">Grey</button>
+        </div>
+      </div>
+      <!-- Size Dropdown -->
+      <div class="size_item">
+        <div class="size_label">
+          <label for="size">Size:</label>
+        </div>
+        <div class="size_choice">
+          <select id="size">
+            <option value="" disabled selected hidden>Choose your size</option>
+            <option value="XS" style="text-align:center;">XS</option>
+            <option value="S" style="text-align:center;">S</option>
+            <option value="M" style="text-align:center;">M</option>
+            <option value="L" style="text-align:center;">L</option>
+            <option value="XL" style="text-align:center;">XL</option>
+          </select>
+        </div>
+      </div>
+      <!-- Variant selector -->
+
+      <form method="post" action="/cart/add">
+        {% if product1.variants.size > 1 %}
+          {% comment %}
+            {% for option in product1.options %}
+            <label for="SingleOptionSelector-{{forloop.index0}}"> {{ option }} </label>
+            <select id="SingleOptionSelector-{{forloop.index0}}"
+                class="single-option-selector single-option-selector-product-template product-form__input"
+                data-index="option{{forloop.index}}" name="id">
+                {% capture option_index %}option{{ forloop.index }}{% endcapture %}
+                {% assign option_values = product1.variants | map: option_index | uniq %}
+                {% for choice in option_values %}
+                <option value="{{ choice }}">
+                    {{ choice }}
+                </option>
+                {% endfor %}
+            </select>
+            {% endfor %}
+          {% endcomment %}
+          <select
+            id="ProductSelect-product-template"
+            class="product-form__variants no-js"
+            name="id"
+            data-productid="{{product3.id}}"
+            style="display: none;"
+          >
+            {% for option in product3.variants %}
+              <option value="{{option.id}}">
+                {{ option.title }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        {% comment %}
+          <input min="1" type="number" id="quantity" name="quantity" value="1">
+        {% endcomment %}
+
+        <!-- Add to Cart Button -->
+        <div class="custom_cart_btn">
+          <button type="submit" class="btn product-form__submit button button--full-width">
+            ADD TO CART<span class="arrow">&#8594;</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endif %}
+{% if section.settings.custom_product_4 != blank %}
+  <div class="popup-container" id="popup4">
+    <div class="popup-content">
+      <span class="popup-close" onclick="closePopup4()">&times;</span>
+      <!-- Product Image -->
+      <div class="cont">
+        <div class="cont_item1">
+          <img src="{{ product4.featured_image | img_url: '100%' }}" alt="Product Image">
+        </div>
+        <!-- Product Details -->
+        <div class="cont_item2">
+          <h2>{{ product4.title }}</h2>
+          <p class="custom_price">{{ product4.price }} €</p>
+          <div class="custom_des">{{ product4.description }}</div>
+        </div>
+      </div>
+      <!-- Color Variant -->
+      <div class="color_item">
+        <div class="color_label">
+          <label for="color">Color:</label>
+        </div>
+        <div class="btn-group color_choice">
+          <button class="button clr_white">White</button>
+          <button class="button clr_black">Black</button>
+        </div>
+      </div>
+      <!-- Size Dropdown -->
+      <div class="size_item">
+        <div class="size_label">
+          <label for="size">Size:</label>
+        </div>
+        <div class="size_choice">
+          <select id="size">
+            <option value="" disabled selected hidden>Choose your size</option>
+            <option value="XS" style="text-align:center;">XS</option>
+            <option value="S" style="text-align:center;">S</option>
+            <option value="M" style="text-align:center;">M</option>
+            <option value="L" style="text-align:center;">L</option>
+            <option value="XL" style="text-align:center;">XL</option>
+          </select>
+        </div>
+      </div>
+      <!-- Variant selector -->
+
+      <form method="post" action="/cart/add">
+        {% if product1.variants.size > 1 %}
+          {% comment %}
+            {% for option in product1.options %}
+            <label for="SingleOptionSelector-{{forloop.index0}}"> {{ option }} </label>
+            <select id="SingleOptionSelector-{{forloop.index0}}"
+                class="single-option-selector single-option-selector-product-template product-form__input"
+                data-index="option{{forloop.index}}" name="id">
+                {% capture option_index %}option{{ forloop.index }}{% endcapture %}
+                {% assign option_values = product1.variants | map: option_index | uniq %}
+                {% for choice in option_values %}
+                <option value="{{ choice }}">
+                    {{ choice }}
+                </option>
+                {% endfor %}
+            </select>
+            {% endfor %}
+          {% endcomment %}
+          <select
+            id="ProductSelect-product-template"
+            class="product-form__variants no-js"
+            name="id"
+            data-productid="{{product4.id}}"
+            style="display: none;"
+          >
+            {% for option in product4.variants %}
+              <option value="{{option.id}}">
+                {{ option.title }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        {% comment %}
+          <input min="1" type="number" id="quantity" name="quantity" value="1">
+        {% endcomment %}
+
+        <!-- Add to Cart Button -->
+        <div class="custom_cart_btn">
+          <button type="submit" class="btn product-form__submit button button--full-width">
+            ADD TO CART<span class="arrow">&#8594;</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endif %}
+{% if section.settings.custom_product_5 != blank %}
+  <div class="popup-container" id="popup5">
+    <div class="popup-content">
+      <span class="popup-close" onclick="closePopup5()">&times;</span>
+      <!-- Product Image -->
+      <div class="cont">
+        <div class="cont_item1">
+          <img src="{{ product5.featured_image | img_url: '100%' }}" alt="Product Image">
+        </div>
+        <!-- Product Details -->
+        <div class="cont_item2">
+          <h2>{{ product5.title }}</h2>
+          <p class="custom_price">{{ product5.price }} €</p>
+          <div class="custom_des">{{ product5.description }}</div>
+        </div>
+      </div>
+      <!-- Color Variant -->
+      <div class="color_item">
+        <div class="color_label">
+          <label for="color">Color:</label>
+        </div>
+        <div class="btn-group color_choice">
+          <button class="button clr_grey">Grey</button>
+          <button class="button clr_black">Black</button>
+        </div>
+      </div>
+      <!-- Size Dropdown -->
+      <div class="size_item">
+        <div class="size_label">
+          <label for="size">Size:</label>
+        </div>
+        <div class="size_choice">
+          <select id="size">
+            <option value="" disabled selected hidden>Choose your size</option>
+            <option value="XS" style="text-align:center;">XS</option>
+            <option value="S" style="text-align:center;">S</option>
+            <option value="M" style="text-align:center;">M</option>
+            <option value="L" style="text-align:center;">L</option>
+            <option value="XL" style="text-align:center;">XL</option>
+          </select>
+        </div>
+      </div>
+      <!-- Variant selector -->
+
+      <form method="post" action="/cart/add">
+        {% if product1.variants.size > 1 %}
+          {% comment %}
+            {% for option in product1.options %}
+            <label for="SingleOptionSelector-{{forloop.index0}}"> {{ option }} </label>
+            <select id="SingleOptionSelector-{{forloop.index0}}"
+                class="single-option-selector single-option-selector-product-template product-form__input"
+                data-index="option{{forloop.index}}" name="id">
+                {% capture option_index %}option{{ forloop.index }}{% endcapture %}
+                {% assign option_values = product1.variants | map: option_index | uniq %}
+                {% for choice in option_values %}
+                <option value="{{ choice }}">
+                    {{ choice }}
+                </option>
+                {% endfor %}
+            </select>
+            {% endfor %}
+          {% endcomment %}
+          <select
+            id="ProductSelect-product-template"
+            class="product-form__variants no-js"
+            name="id"
+            data-productid="{{product5.id}}"
+            style="display: none;"
+          >
+            {% for option in product5.variants %}
+              <option value="{{option.id}}">
+                {{ option.title }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        {% comment %}
+          <input min="1" type="number" id="quantity" name="quantity" value="1">
+        {% endcomment %}
+
+        <!-- Add to Cart Button -->
+        <div class="custom_cart_btn">
+          <button type="submit" class="btn product-form__submit button button--full-width">
+            ADD TO CART<span class="arrow">&#8594;</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endif %}
+{% if section.settings.custom_product_6 != blank %}
+  <div class="popup-container" id="popup6">
+    <div class="popup-content">
+      <span class="popup-close" onclick="closePopup6()">&times;</span>
+      <!-- Product Image -->
+      <div class="cont">
+        <div class="cont_item1">
+          <img src="{{ product6.featured_image | img_url: '100%' }}" alt="Product Image">
+        </div>
+        <!-- Product Details -->
+        <div class="cont_item2">
+          <h2>{{ product6.title }}</h2>
+          <p class="custom_price">{{ product6.price }} €</p>
+          <div class="custom_des">{{ product6.description }}</div>
+        </div>
+      </div>
+      <!-- Color Variant -->
+      <div class="color_item">
+        <div class="color_label">
+          <label for="color">Color:</label>
+        </div>
+        <div class="btn-group color_choice">
+          <button class="button clr_blue">Blue</button>
+          <button class="button clr_black">Black</button>
+        </div>
+      </div>
+      <!-- Size Dropdown -->
+      <div class="size_item">
+        <div class="size_label">
+          <label for="size">Size:</label>
+        </div>
+        <div class="size_choice">
+          <select id="size">
+            <option value="" disabled selected hidden>Choose your size</option>
+            <option value="XS" style="text-align:center;">XS</option>
+            <option value="S" style="text-align:center;">S</option>
+            <option value="M" style="text-align:center;">M</option>
+            <option value="L" style="text-align:center;">L</option>
+            <option value="XL" style="text-align:center;">XL</option>
+          </select>
+        </div>
+      </div>
+      <!-- Variant selector -->
+
+      <form method="post" action="/cart/add">
+        {% if product1.variants.size > 1 %}
+          {% comment %}
+            {% for option in product1.options %}
+            <label for="SingleOptionSelector-{{forloop.index0}}"> {{ option }} </label>
+            <select id="SingleOptionSelector-{{forloop.index0}}"
+                class="single-option-selector single-option-selector-product-template product-form__input"
+                data-index="option{{forloop.index}}" name="id">
+                {% capture option_index %}option{{ forloop.index }}{% endcapture %}
+                {% assign option_values = product1.variants | map: option_index | uniq %}
+                {% for choice in option_values %}
+                <option value="{{ choice }}">
+                    {{ choice }}
+                </option>
+                {% endfor %}
+            </select>
+            {% endfor %}
+          {% endcomment %}
+          <select
+            id="ProductSelect-product-template"
+            class="product-form__variants no-js"
+            name="id"
+            data-productid="{{product6.id}}"
+            style="display: none;"
+          >
+            {% for option in product6.variants %}
+              <option value="{{option.id}}">
+                {{ option.title }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        {% comment %}
+          <input min="1" type="number" id="quantity" name="quantity" value="1">
+        {% endcomment %}
+
+        <!-- Add to Cart Button -->
+        <div class="custom_cart_btn">
+          <button type="submit" class="btn product-form__submit button button--full-width">
+            ADD TO CART<span class="arrow">&#8594;</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endif %}
+<script>
+  function openPopup1() {
+      document.getElementById("popup1").style.display = "block";
+  }
+
+  function closePopup1() {
+      document.getElementById("popup1").style.display = "none";
+  }
+  function openPopup2() {
+      document.getElementById("popup2").style.display = "block";
+  }
+
+  function closePopup2() {
+      document.getElementById("popup2").style.display = "none";
+  }
+  function openPopup3() {
+      document.getElementById("popup3").style.display = "block";
+  }
+
+  function closePopup3() {
+      document.getElementById("popup3").style.display = "none";
+  }
+  function openPopup4() {
+      document.getElementById("popup4").style.display = "block";
+  }
+
+  function closePopup4() {
+      document.getElementById("popup4").style.display = "none";
+  }
+  function openPopup5() {
+      document.getElementById("popup5").style.display = "block";
+  }
+
+  function closePopup5() {
+      document.getElementById("popup5").style.display = "none";
+  }
+  function openPopup6() {
+      document.getElementById("popup6").style.display = "block";
+  }
+
+  function closePopup6() {
+      document.getElementById("popup6").style.display = "none";
+  }
+</script>
+{% schema %}
+{
+"name": "Custom Product Grid",
+"settings": [
+{
+"type": "text",
+"id": "heading",
+"label": "Section Heading",
+"default": "Featured Products"
+},
+{
+"type": "image_picker",
+"id": "image_1",
+"label": "Image 1"
+},
+{
+"type": "product",
+"id": "custom_product_1",
+"label": "Select Product 1"
+},
+{
+"type": "image_picker",
+"id": "image_2",
+"label": "Image 2"
+},
+{
+"type": "product",
+"id": "custom_product_2",
+"label": "Select Product 2"
+},
+{
+"type": "image_picker",
+"id": "image_3",
+"label": "Image 3"
+},
+{
+"type": "product",
+"id": "custom_product_3",
+"label": "Select Product 3"
+},
+{
+"type": "image_picker",
+"id": "image_4",
+"label": "Image 4"
+},
+{
+"type": "product",
+"id": "custom_product_4",
+"label": "Select Product 4"
+},
+{
+"type": "image_picker",
+"id": "image_5",
+"label": "Image 5"
+},
+{
+"type": "product",
+"id": "custom_product_5",
+"label": "Select Product 5"
+},
+{
+"type": "image_picker",
+"id": "image_6",
+"label": "Image 6"
+},
+{
+"type": "product",
+"id": "custom_product_6",
+"label": "Select Product 6"
+}
+],
+"presets": [
+{
+"name": "Custom Product Grid"
+}
+]
+}
+{% endschema %}
+<style>
+  .product-grid {
+      padding: 5% 6%;
+  }
+
+  .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-column-gap: 9px;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+      .grid-container {
+          grid-template-columns: repeat(2, 1fr);
+      }
+
+      .product-grid {
+          text-align: center;
+      }
+  }
+
+  .grid-item {
+      position: relative;
+  }
+
+
+
+  .product-item img {
+      width: 100%;
+      /* Ensure images fill their container */
+      height: auto;
+      /* Maintain aspect ratio */
+  }
+
+  .popup-trigger {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      color: black;
+      background-color: rgb(255 255 255 / 81%);
+      padding: 0px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1;
+      /* margin: 0px; */
+      /* height: 34px; */
+      width: 22px;
+      border: 0px;
+  }
+
+  .product-link {
+      display: block;
+  }
+
+  .product-item {
+      float: left !important;
+      position: relative;
+  }
+
+  .popup-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+  }
+
+  .popup-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      width: 25%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .popup-close {
+      position: absolute;
+      top: -13px;
+      right: 4px;
+      cursor: pointer;
+      font-size: 25px;
+  }
+
+  .cont_item1 {
+      width: 40%;
+      float: left;
+      height: 110px;
+  }
+
+  .cont_item2 {
+      width: 60%;
+      height: 110px;
+      float: right;
+      padding-left: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+  }
+
+  .size_choice select {
+      width: 100% !important;
+  }
+
+  .custom_cart_btn a {
+      text-align: center;
+      /* width: 100% !important; */
+      background: black;
+      color: white;
+      /* width: 139px !important; */
+      /* padding: 6% 30%; */
+      padding: 13px 58px;
+  }
+
+  .custom_img {
+      width: 100%;
+  }
+
+  .product-item1 button {
+      top: 60%;
+  }
+
+  .product-item2 button {
+      left: 72%;
+  }
+
+  .product-item3 button {
+      top: 17%;
+      left: 57%;
+  }
+
+  .product-item4 button {
+      top: 22%;
+      left: 63%;
+  }
+
+  .product-item5 button {
+      top: 25%;
+  }
+
+  .product-item6 button {
+      top: 60%;
+      left: 43%;
+  }
+
+  .cont_item1 img {
+      width: 100%;
+      height: 110px;
+  }
+
+  .cont_item2 h2 {
+      font-size: 15px;
+      margin: 0;
+  }
+
+
+  p.custom_price {
+      font-weight: 700;
+      font-size: 15px;
+      margin: 0;
+  }
+
+  .custom_des p {
+      line-height: 9px;
+      font-size: 11px;
+      margin: 0 !important;
+  }
+
+  .cont {
+      height: 110px;
+      margin-bottom: 15px;
+  }
+
+  .btn-group .button {
+      background-color: white;
+      border: 1px solid black;
+      color: black;
+      padding: 4%;
+      text-align: left !important;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+      float: left;
+      margin-bottom: 15px;
+      width: 50%;
+  }
+
+  .btn-group .button:before {
+      content: none;
+  }
+
+  .btn-group .button:after {
+      content: none;
+  }
+
+  .btn-group .button:focus {
+      background-color: black;
+      color: white;
+
+  }
+  select#size {
+      font-size: 16px;
+      height: 41px;
+      border-radius: 0;
+      margin-bottom: 40px;
+  }
+  .clr_white {
+    border-left: 10px solid whitesmoke !important;
+  }
+  .clr_black {
+    border-left: 10px solid black !important;
+  }
+  .clr_blue {
+    border-left: 10px solid blue !important;
+  }
+  .clr_red {
+    border-left: 10px solid red !important;
+  }
+  .clr_grey {
+    border-left: 10px solid grey !important;
+  }
+</style>

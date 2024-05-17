@@ -1,0 +1,201 @@
+<div class="custom-header">
+  <div class="toggle_style">
+    <div class="container" onclick="toggleHeaderContent()">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+  </div>
+  <div class="logo">
+    <a href="{{ shop.url }}">
+      <img src="{{ section.settings.logo | img_url: 'master' }}" alt="{{ shop.name }}">
+    </a>
+  </div>
+  <div class="center-text">
+    <h1>{{ section.settings.center_text }}</h1>
+  </div>
+  <div class="custom_button">
+    <a href="{{ section.settings.button_link }}">
+      {{- section.settings.button_text -}}
+      <span class="arrow">&#8594;</span></a
+    >
+  </div>
+</div>
+<script>
+  function toggleHeaderContent() {
+      var headerContent = document.querySelectorAll('.center-text, .custom_button');
+      headerContent.forEach(function (element) {
+          element.style.display = (element.style.display === 'none' || element.style.display === '') ? 'block' : 'none';
+      });
+
+      var container = document.querySelector('.container');
+      container.classList.toggle('change');
+  }
+</script>
+
+{% schema %}
+{
+"name": "Custom Header",
+"settings": [
+{
+"type": "image_picker",
+"id": "logo",
+"label": "Logo"
+},
+{
+"type": "text",
+"id": "center_text",
+"label": "Center Text"
+},
+{
+"type": "text",
+"id": "button_text",
+"label": "Button Text"
+},
+{
+"type": "url",
+"id": "button_link",
+"label": "Button Link"
+}
+],
+"presets":[
+{
+"name": "Custom Header"
+}
+]
+}
+{% endschema %}
+<style>
+  .custom-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 80px;
+      background-color: #F5F5F5;
+  }
+
+  .center-text {
+      margin: 0;
+  }
+
+  .center-text h1 {
+      margin: 0;
+      font-size: medium;
+  }
+
+  .custom_button {
+      margin: 0;
+  }
+
+  .logo {
+      margin: 0;
+  }
+
+  .logo img {
+      max-width: 100px;
+      /* Adjust as needed */
+  }
+
+  .center-text {
+      flex-grow: 1;
+      text-align: center;
+  }
+
+  .custom_button a {
+      display: inline-block;
+      padding: 10px 30px;
+      background-color: #FFF544;
+      color: #fff;
+      text-decoration: none;
+      /* border-radius: 5px; */
+      color: black;
+      font-weight: 400;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+      .custom-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px;
+          background-color: #f8f8f8;
+          flex-direction: column;
+          flex-wrap: wrap;
+      }
+
+      .center-text,
+      .custom_button {
+          display: none;
+      }
+
+      .center-text {
+          margin: 20px 0;
+      }
+  }
+
+
+
+  .container {
+      display: unset !important;
+
+  }
+
+  .toggle_style {
+      /* width: -webkit-fill-available; */
+      /* margin: 0 auto; */
+      position: absolute;
+      top: 22px;
+      left: 34px;
+  }
+  }
+
+  @media (max-width: 576px) {
+      .logo img {
+          max-width: 80px;
+          /* Adjust as needed */
+      }
+
+      .custom_button a {
+          padding: 8px 16px;
+      }
+
+  }
+
+  @media (min-width: 769px) {
+      .container {
+          display: none !important;
+          cursor: pointer;
+
+      }
+
+      .center-text,
+      .custom_button {
+          display: unset !important;
+      }
+
+  }
+
+  .bar1,
+  .bar2,
+  .bar3 {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      margin: 4px 0;
+      transition: 0.4s;
+      display: block !important;
+  }
+
+  .change .bar1 {
+      transform: translate(0, 6px) rotate(-45deg);
+  }
+
+  .change .bar2 {
+      opacity: 0;
+  }
+
+  .change .bar3 {
+      transform: translate(0, -8px) rotate(45deg);
+  }
+</style>

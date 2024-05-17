@@ -1,0 +1,234 @@
+<div class="custom-banner desktop_view">
+  <div class="banner-images">
+    <img src="{{ section.settings.banner_image_1 | img_url: 'master' }}" alt="Banner Image 1">
+  </div>
+  <div class="content_custom">
+    <h2>{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.description }}</p>
+    <div class="custom_button2">
+      <a href="{{ section.settings.button_link }}">
+        {{- section.settings.button_text -}}
+        <span class="arrow">&#8594;</span></a
+      >
+    </div>
+  </div>
+  <div class="bottom_text">{{ section.settings.bottom_text }}</div>
+</div>
+<div class="custom-banner mobile_view">
+  <div class="content_custom">
+    <h2>{{ section.settings.heading_mob }}</h2>
+    <p>{{ section.settings.description_mob }}</p>
+  </div>
+  <div class="custom_button2">
+    <a href="{{ section.settings.button_link_mob }}">
+      {{- section.settings.button_text_mob -}}
+      <span class="arrow">&#8594;</span></a
+    >
+  </div>
+  <div class="banner-images">
+    <img src="{{ section.settings.banner_image_mob | img_url: 'master' }}" alt="Banner Image 1">
+  </div>
+
+  <div class="bottom_text">{{ section.settings.bottom_text_mob }}</div>
+</div>
+<style>
+  .bottom_text {
+      text-align: center;
+      background: #F5F5F5;
+      color: black;
+  }
+
+  .custom-banner {
+      position: relative;
+  }
+
+  .banner-images {
+      display: flex;
+      flex-wrap: wrap;
+  }
+
+  .banner-images img {
+      width: 100%;
+  }
+
+  .content_custom {
+      position: absolute;
+      top: 69%;
+      left: 21%;
+      transform: translate(-50%, -50%);
+      text-align: left;
+      color: #fff;
+      width: 42%;
+      height: auto;
+      background: white;
+      /* padding: 89px 68px; */
+      /* opacity: 0.4; */
+      padding-right: 8px;
+      padding-top: 0px;
+      padding-bottom: 0;
+      padding-left: 67px;
+  }
+
+  .content_custom h2 {
+      font-size: 77px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      margin-top: 26px;
+  }
+
+  .content_custom p {
+      font-size: 19px;
+      font-weight: 500;
+      margin-bottom: 45px;
+      color: black;
+  }
+
+
+  .custom_button2 {
+      margin: 0;
+  }
+
+  .custom_button2 a {
+      display: inline-block;
+      padding: 10px 30px;
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      /* border-radius: 5px; */
+
+      font-weight: 400;
+      width: 36%;
+      text-align: center;
+      margin-bottom: 22px;
+  }
+
+  @media (min-width: 769px) {
+      .desktop_view {
+          display: unset;
+      }
+
+      .mobile_view {
+          display: none;
+      }
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+      .desktop_view {
+          display: none;
+      }
+
+      .mobile_view {
+          display: unset;
+      }
+
+      .banner-images img {
+          width: 100%;
+      }
+
+      .content_custom {
+          position: relative;
+          top: auto;
+          left: auto;
+          /* right: auto; */
+          transform: none;
+          text-align: center;
+          padding: 25px 25px;
+          background-color: white;
+          width: 100%;
+      }
+
+      .content_custom h2 {
+          color: black;
+          font-size: 23px;
+          margin: 2px;
+      }
+
+      .content_custom p {
+          color: black;
+          font-size: 14px;
+          margin: 0;
+      }
+
+      .custom_button2 a {
+          position: absolute;
+          top: 70%;
+          width: 36%;
+          left: 32%;
+          font-size: 12px;
+      }
+  }
+</style>
+
+{% schema %}
+{
+"name": "Custom Banner",
+"settings": [
+{
+"type": "image_picker",
+"id": "banner_image_1",
+"label": "Desktop Banner Image"
+},
+{
+"type": "text",
+"id": "heading",
+"label": "Desktop Heading"
+},
+{
+"type": "textarea",
+"id": "description",
+"label": "Desktop Description"
+},
+{
+"type": "text",
+"id": "button_text",
+"label": "Desktop Button Text"
+},
+{
+"type": "url",
+"id": "button_link",
+"label": "Desktop Button Link"
+},
+{
+"type": "text",
+"id": "bottom_text",
+"label": "Desktop Bottom Text"
+},
+{
+"type": "image_picker",
+"id": "banner_image_mob",
+"label": "Mobile Banner Image"
+},
+{
+"type": "text",
+"id": "heading_mob",
+"label": "Mobile Heading"
+},
+{
+"type": "textarea",
+"id": "description_mob",
+"label": "Mobile Description"
+},
+{
+"type": "text",
+"id": "button_text_mob",
+"label": "Mobile Button Text"
+},
+{
+"type": "url",
+"id": "button_link_mob",
+"label": "Mobile Button Link"
+},
+{
+"type": "text",
+"id": "bottom_text_mob",
+"label": "Mobile Bottom Text"
+}
+],
+"presets":[
+{
+"name": "Custom Banner"
+}
+]
+}
+{% endschema %}
